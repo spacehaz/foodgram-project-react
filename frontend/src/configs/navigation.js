@@ -5,15 +5,15 @@ export default [
     auth: false
   },{
     title: 'Мои подписки',
-    href: '/subscribes',
+    href: '/subscriptions',
     auth: true
   },{
     title: 'Создать рецепт',
-    href: '/create-recipe',
+    href: '/recipes/create',
     auth: true
   },{
     title: 'Избранное',
-    href: '/favorite',
+    href: '/favorites',
     auth: true
   }, {
     title: 'Список покупок',

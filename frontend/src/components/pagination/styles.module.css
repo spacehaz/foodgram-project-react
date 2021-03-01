@@ -1,0 +1,28 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.paginationItem {
+  width: 46px;
+  height: 46px;
+  border-radius: 46px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+}
+
+.paginationItemActive {
+  color: #FFF;
+  background-color: #4A61DD;
+  cursor: default;
+}
+
+.arrow {
+  padding: 21px;
+  cursor: pointer;
+}

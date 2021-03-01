@@ -1,8 +1,13 @@
 import styles from './styles.module.css'
 import cn from 'classnames'
+import { hexToRgba } from '../../utils'
 
-const Tag = ({ title, type = 'orange' }) => {
-  return <div className={cn(styles.tag, styles[`tag_type_${type}`])}>
+const Tag = ({ title, color = '#E26C2D' }) => {
+  const background = hexToRgba(color, 0.1)
+  return <div className={cn(styles.tag)} style={{
+    backgroundColor: background,
+    color
+  }}>
     {title}
   </div>
 }

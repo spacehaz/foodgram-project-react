@@ -1,5 +1,5 @@
 import styles from './style.module.css'
-import { LinkComponent, Icons, Button, Tag } from '../index'
+import { LinkComponent, Icons, Button, TagsContainer } from '../index'
 import { useState } from 'react'
 // import api from 'api'
 
@@ -17,15 +17,7 @@ const Card = ({
     favorite, setFavorite
   ] = useState(isFavorite)
 
-  const defineTagColor = tag => {
-    if (tag === 'Завтрак') {
-      return 'orange'
-    } else if (tag === 'Обед') {
-      return 'green'
-    } else {
-      return 'violet'
-    }
-  }
+  
 
   return <div className={styles.card}>
       <div className={styles.card__image} style={{ backgroundImage: `url(${ img })`}} />
@@ -35,12 +27,7 @@ const Card = ({
           href={`/recipes/${id}`}
           title={title}
         />
-        <div className={styles.card__tags}>
-          {tags.map(tag => {
-            const color = defineTagColor(tag)
-            return <Tag type={color} title={tag} />
-          })}
-        </div>
+        <TagsContainer tags={tags} />
         <div className={styles.card__time}>
           <Icons.ClockIcon /> {time} мин.
         </div>

@@ -1,0 +1,78 @@
+API
+
+USERS
+// тут у каждого юзера будет список тех, на кого юзер подписан
+/subscriptions POST / DELETE
+/favorites POST / DELETE
+
+
+1) POST: '/sign-in'
+  request:
+    body: { email: STRING, password: STRING }
+  response:
+    { jwt: JWT_TOKEN, email: STRING }
+
+2) POST: '/sign-up'
+  request:
+    body: { email: STRING, password: STRING, name: STRING, username: STRING }
+  response:
+    { email: STRING, name: STRING, username: STRING, id: ID }
+
+
+RECIPES
+// тут у каждого рецепта будет список тех юзеров, кто добавил рецепт
+
+1) GET: '/recipes?page=1&limit=6'
+  request:
+  response:
+    [
+      {
+        title: STRING,
+        id: OBJECT_ID,
+        img: URL,
+        tags: [STRING],
+        time: NUMBER,
+        author: OBJECT_ID,
+        description: STRING,
+        ingredients: [
+          {
+            id: ID,
+            amount: NUMBER,
+          }
+        ]
+      }
+    ]
+
+2) POST: '/recipes'
+  request:
+    headers:
+      'authorization': 'bearer JWT'
+    body: {
+      title: STRING,
+      img: file,
+      tags: [STRING],
+      time: NUMBER,
+      description: STRING,
+      ingredients: [
+        {
+          id: ID,
+          amount: NUMBER,
+        }
+      ]
+    }
+  response:
+    {
+      title: STRING,
+      id: ID,
+      img: URL,
+      tags: [STRING],
+      time: NUMBER,
+      author: ID,
+      description: STRING,
+      ingredients: [
+        {
+          id: ID,
+          amount: NUMBER,
+        }
+      ]
+    }

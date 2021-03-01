@@ -1,4 +1,4 @@
-import { Card, Title, CardList, Container, Main  } from '../../components'
+import { Card, Title, Pagination, CardList, Container, Main  } from '../../components'
 
 const HomePage = ({ recipes = [] }) => {
   return <Main>
@@ -7,6 +7,7 @@ const HomePage = ({ recipes = [] }) => {
       <CardList>
         {recipes.map(card => <Card {...card} key={card.id} />)}
       </CardList>
+      <Pagination />
     </Container>
   </Main>
 }

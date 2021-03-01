@@ -1,0 +1,54 @@
+.single-card {
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+}
+
+.single-card__buttons {
+  display: flex;
+  margin-bottom: 40px;
+}
+
+
+.single-card__button {
+  margin-right: 16px;
+}
+
+.single-card__button:last-child {
+  margin-right: 0px;
+}
+
+
+
+
+.single-card__image {
+  object-fit: cover;
+  align-self: flex-start;
+  height: 480px;
+  width: 480px;
+  border-radius: 15px;
+}
+
+.single-card__info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-left: 60px;
+}
+
+
+.single-card__header-info {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 18px;
+}
+
+.single-card__title {
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 40px;
+  line-height: 49px;
+  color: #000000;
+  margin: 0;
+}

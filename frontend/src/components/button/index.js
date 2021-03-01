@@ -1,8 +1,14 @@
 import cn from 'classnames'
 import styles from './style.module.css'
 
-const Button = ({ children, modifier, href, clickHandler }) => {
-  const classNames = cn(styles.button, {
+const Button = ({
+  children,
+  modifier = 'style_light-blue',
+  href,
+  clickHandler,
+  className
+}) => {
+  const classNames = cn(styles.button, className, {
     [styles[`button_${modifier}`]]: modifier
   })
   if (href) {

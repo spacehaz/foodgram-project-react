@@ -3,18 +3,41 @@ import './App.css';
 import { Switch, Route, useHistory } from 'react-router-dom'
 import React from 'react'
 import { Header, Footer, ProtectedRoute } from './components'
-import { Main, SignIn, SingleCard, SignUp } from './pages'
+
+import {
+  Main,
+  Cart,
+  SignIn,
+  Subscriptions,
+  Favorites,
+  SingleCard,
+  SignUp,
+  RecipeEdit,
+  RecipeCreate
+} from './pages'
+
 import { useState } from 'react'
 import img1 from './images/1.jpg'
 import img2 from './images/2.jpg'
 import { RecipesContext } from './contexts'
+
 function App() {
   const recipes = [
     {
       title: 'Круассан с омлетом, лососем и голландским соусом',
       id: 1,
       img: img1,
-      tags: ['Обед', 'Ужин'],
+      tags: [{
+        id: 1,
+        title: 'Обед',
+        color: '#E26C2D',
+        slug: 'meal'
+      }, {
+        id: 2,
+        title: 'Ужин',
+        color: '#8775D2',
+        slug: 'dinner'
+      }],
       time: 30,
       author: 'Александр Бородин',
       description: '<p>Смешать молоко с сахаром, добавить яйца, тщательно все взбить. Обмакнуть тосты в смесь и жарить на сливочном масле до золотистой корочки.</p><p>Полить сверху сиропом топинамбура и украсить ягодами.</p>',
@@ -22,27 +45,33 @@ function App() {
         {
           title: 'Яйцо',
           amount: 2,
-          dimension: 'шт'
+          dimension: 'шт',
+          id: 1
         }, {
           title: 'Молоко',
           amount: 200,
-          dimension: 'мл'
+          dimension: 'мл',
+          id: 2
         }, {
           title: 'Тосты',
           amount: 4,
-          dimension: 'шт'
+          dimension: 'шт',
+          id: 3
         }, {
           title: 'Сахар',
           amount: 2,
-          dimension: 'стл.л.'
+          dimension: 'стл.л.',
+          id: 4
         }, {
           title: 'Ягоды',
           amount: 100,
-          dimension: 'гр'
+          dimension: 'гр',
+          id: 5
         }, {
           title: 'Сироп Топинамбура',
           amount: 3,
-          dimension: 'стл.л'
+          dimension: 'стл.л',
+          id: 6
         }
       ]
     },
@@ -50,7 +79,17 @@ function App() {
       title: 'Французские тосты',
       id: 2,
       img: img2,
-      tags: ['Обед', 'Ужин'],
+      tags: [{
+        id: 1,
+        title: 'Обед',
+        color: '#E26C2D',
+        slug: 'meal'
+      }, {
+        id: 2,
+        title: 'Ужин',
+        color: '#8775D2',
+        slug: 'dinner'
+      }],
       time: 30,
       author: 'Александр Бородин'
     },
@@ -58,7 +97,17 @@ function App() {
       title: 'Французский тост с сиропом агавы',
       id: 3,
       img: img1,
-      tags: ['Обед', 'Ужин'],
+      tags: [{
+        id: 1,
+        title: 'Обед',
+        color: '#E26C2D',
+        slug: 'meal'
+      }, {
+        id: 2,
+        title: 'Ужин',
+        color: '#8775D2',
+        slug: 'dinner'
+      }],
       time: 30,
       author: 'Александр Бородин'
     },
@@ -66,7 +115,17 @@ function App() {
       title: 'Вафли с яйцом «Бенедикт» и лососем',
       id: 4,
       img: img2,
-      tags: ['Обед', 'Ужин'],
+      tags: [{
+        id: 1,
+        title: 'Обед',
+        color: '#E26C2D',
+        slug: 'meal'
+      }, {
+        id: 2,
+        title: 'Ужин',
+        color: '#8775D2',
+        slug: 'dinner'
+      }],
       time: 30,
       author: 'Александр Бородин'
     }
@@ -81,15 +140,45 @@ function App() {
         <Switch>
           <ProtectedRoute
             exact
-            path='/recipes'
-            recipes={recipes}
-            component={Main}
+            path='/cart'
+            component={Cart}
+            loggedIn={loggedIn}
+          />
+          <ProtectedRoute
+            exact
+            path='/subscriptions'
+            component={Subscriptions}
+            loggedIn={loggedIn}
+          />
+
+          <ProtectedRoute
+            exact
+            path='/favorites'
+            favorites={recipes}
+            component={Favorites}
+            loggedIn={loggedIn}
+          />
+
+          <ProtectedRoute
+            exact
+            path='/recipes/create'
+            favorites={recipes}
+            component={RecipeCreate}
+            loggedIn={loggedIn}
+          />
+
+          <ProtectedRoute
+            exact
+            path='/recipes/:id/edit'
+            component={RecipeEdit}
             loggedIn={loggedIn}
           />
           <Route exact path='/recipes/:id'>
-            <SingleCard />
+            <SingleCard loggedIn={loggedIn} />
           </Route>
-
+          <Route exact path='/recipes'>
+            <Main recipes={recipes} loggedIn={loggedIn} />
+          </Route>
           <Route exact path='/signin'>
             <SignIn onSignIn={_ => {
               history.push('/recipes')
