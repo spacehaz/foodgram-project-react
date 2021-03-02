@@ -6,7 +6,7 @@ const TagsContainer = ({ tags }) => {
   if (!tags) { return null }
   return <div className={styles['tags-container']}>
     {tags.map(tag => {
-      return <Tag color={tag.color} title={tag.title} />
+      return <Tag key={tag.id} color={tag.color} title={tag.title} />
     })}
   </div>
 }

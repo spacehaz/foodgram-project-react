@@ -7,18 +7,15 @@ const Card = ({
   title = 'Без названия',
   id,
   img,
-  isFavorite,
+  is_favorited,
+  is_in_shopping_cart,
   tags,
   time,
-  author
+  author,
+  handleLike,
+  handleAddToCart
 }) => {
-
-  const [
-    favorite, setFavorite
-  ] = useState(isFavorite)
-
   
-
   return <div className={styles.card}>
       <div className={styles.card__image} style={{ backgroundImage: `url(${ img })`}} />
       <div className={styles.card__body}>
@@ -37,17 +34,19 @@ const Card = ({
       </div>
       
       <div className={styles.card__footer}>
-          <Button modifier='style_light-blue' clickHandler={_ => {}}>Купить</Button>
+          <Button modifier='style_light-blue' clickHandler={_ => {
+            handleAddToCart({ id, toAdd: !is_in_shopping_cart })
+          }}>
+            Добавить в покупки
+          </Button>
           
           <Button
             modifier='style_none'
             clickHandler={_ => {
-           {/*   favorite ?
-                api.removeFavorite(id).then(_ => setFavorite(false)) :
-                api.addFavorite(id).then(_ => setFavorite(true))*/}
+              handleLike({ id, toLike: !is_favorited })
             }}
           >
-            {favorite ? <Icons.StarActiveIcon /> : <Icons.StarIcon />}
+            {is_favorited ? <Icons.StarActiveIcon /> : <Icons.StarIcon />}
           </Button>
       </div>
   </div>

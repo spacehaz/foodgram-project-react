@@ -23,10 +23,12 @@ import img2 from './images/2.jpg'
 import { RecipesContext, AuthContext } from './contexts'
 
 function App() {
-  const recipes = [
+  const initialRecipes = [
     {
       title: 'Круассан с омлетом, лососем и голландским соусом',
       id: 1,
+      is_favorited: false,
+      is_in_shopping_cart: false,
       img: img1,
       tags: [{
         id: 1,
@@ -97,6 +99,8 @@ function App() {
     {
       title: 'Французский тост с сиропом агавы',
       id: 3,
+      is_favorited: false,
+      is_in_shopping_cart: false,
       img: img1,
       tags: [{
         id: 1,
@@ -115,6 +119,8 @@ function App() {
     {
       title: 'Вафли с яйцом «Бенедикт» и лососем',
       id: 4,
+      is_favorited: false,
+      is_in_shopping_cart: false,
       img: img2,
       tags: [{
         id: 1,
@@ -132,8 +138,30 @@ function App() {
     }
   ]
   const [ loggedIn, setLoggedIn ] = useState(true)
-  const history = useHistory()
+  const [ loading, setLoading ] = useState(false)
+  const [ recipes, setRecipes ] = useState(initialRecipes)
 
+  const handleLike = ({ id, toLike = true }) => {
+    const recipesUpdated = recipes.map(recipe => {
+      if (recipe.id === id) {
+        recipe.is_favorited = toLike
+      }
+      return recipe
+    })
+    setRecipes(recipesUpdated)
+  }
+
+  const handleAddToCart = ({ id, toAdd = true }) => {
+    const recipesUpdated = recipes.map(recipe => {
+      if (recipe.id === id) {
+        recipe.is_in_shopping_cart = toAdd
+      }
+      return recipe
+    })
+    setRecipes(recipesUpdated)
+  }
+
+  const history = useHistory()
   const onSignOut = () => {
     setLoggedIn(false)
   }
@@ -190,7 +218,12 @@ function App() {
             </Route>
 
             <Route exact path='/recipes'>
-              <Main recipes={recipes} loggedIn={loggedIn} />
+              <Main
+                recipes={recipes}
+                loggedIn={loggedIn}
+                handleLike={handleLike}
+                handleAddToCart={handleAddToCart}
+              />
             </Route>
 
 
@@ -213,7 +246,7 @@ function App() {
         </div>
       </AuthContext.Provider>
     </RecipesContext.Provider>
-  );
+  )
 }
 
 export default App;
