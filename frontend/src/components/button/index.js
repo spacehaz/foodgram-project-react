@@ -6,10 +6,12 @@ const Button = ({
   modifier = 'style_light-blue',
   href,
   clickHandler,
-  className
+  className,
+  disabled
 }) => {
   const classNames = cn(styles.button, className, {
-    [styles[`button_${modifier}`]]: modifier
+    [styles[`button_${modifier}`]]: modifier,
+    [styles.button_disabled]: disabled
   })
   if (href) {
     return <a
@@ -21,6 +23,7 @@ const Button = ({
   }
   return <button
     className={classNames}
+    disabled={disabled}
     onClick={_ => clickHandler()}
   >
     {children}

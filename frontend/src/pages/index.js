@@ -7,6 +7,7 @@ import Cart from './cart'
 import Favorites from './favorites'
 import Subscriptions from './subscriptions'
 import RecipeCreate from './recipe-create'
+import User from './user'
 
 export {
   Main,
@@ -17,5 +18,6 @@ export {
   Cart,
   Favorites,
   Subscriptions,
-  RecipeCreate
+  RecipeCreate,
+  User
 }

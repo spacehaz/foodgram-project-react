@@ -34,6 +34,11 @@
   color: #FFF;
 }
 
+.button_disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
 .button_style_dark-blue:hover {
   background: #2845DF;
 }

@@ -23,6 +23,14 @@
 }
 
 .arrow {
-  padding: 21px;
   cursor: pointer;
+  max-width: 16px;
+}
+
+.arrowLeft {
+  margin-right: 21px;
+}
+
+.arrowRight {
+  margin-left: 21px;
 }

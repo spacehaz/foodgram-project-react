@@ -10,7 +10,9 @@ const Input = ({
     disabled,
     type = 'text',
     inputClassName,
-    labelClassName
+    labelClassName,
+    name,
+    required
   }) => {
   return <div className={styles.input}>
     <label className={cn(styles.inputLabel, labelClassName)}>
@@ -19,8 +21,10 @@ const Input = ({
       </div>
       <input
         type={type}
+        required={required}
+        name={name}
         className={cn(styles.inputField, inputClassName)}
-        onChange={e => onChange && onChange(e.target.value)}
+        onChange={onChange}
       />
     </label>
   </div>

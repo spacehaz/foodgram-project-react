@@ -1,9 +1,12 @@
 import cn from 'classnames'
 import styles from './styles.module.css'
+import { useContext } from 'react'
 import { Button, LinkComponent } from '../index.js'
+import { AuthContext } from '../../contexts'
 
-const AccountMenu = ({ loggedIn }) => {
-  if (!loggedIn) {
+const AccountMenu = ({ onSignOut }) => {
+  const authContext = useContext(AuthContext)
+  if (!authContext) {
     return <div className={styles.menu}>
       <LinkComponent
         href='/signup'
@@ -12,7 +15,18 @@ const AccountMenu = ({ loggedIn }) => {
       />
     </div>
   }
-  return <div>
+  return <div className={styles.menu}>
+    <LinkComponent
+      className={styles.menuLink}
+      href='/signup'
+      title='Изменить пароль'
+    />
+    <button
+      className={styles.menuLink}
+      onClick={onSignOut}
+    >
+      Выход
+    </button>
   </div>
 }
 

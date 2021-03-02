@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { Switch, Route, useHistory } from 'react-router-dom'
+import { Switch, Route, useHistory, Redirect } from 'react-router-dom'
 import React from 'react'
 import { Header, Footer, ProtectedRoute } from './components'
 
@@ -13,13 +13,14 @@ import {
   SingleCard,
   SignUp,
   RecipeEdit,
-  RecipeCreate
+  RecipeCreate,
+  User
 } from './pages'
 
 import { useState } from 'react'
 import img1 from './images/1.jpg'
 import img2 from './images/2.jpg'
-import { RecipesContext } from './contexts'
+import { RecipesContext, AuthContext } from './contexts'
 
 function App() {
   const recipes = [
@@ -132,66 +133,85 @@ function App() {
   ]
   const [ loggedIn, setLoggedIn ] = useState(true)
   const history = useHistory()
+
+  const onSignOut = () => {
+    setLoggedIn(false)
+  }
   
   return (
     <RecipesContext.Provider value={recipes}>
-      <div className="App">
-        <Header loggedIn={loggedIn} />
-        <Switch>
-          <ProtectedRoute
-            exact
-            path='/cart'
-            component={Cart}
-            loggedIn={loggedIn}
-          />
-          <ProtectedRoute
-            exact
-            path='/subscriptions'
-            component={Subscriptions}
-            loggedIn={loggedIn}
-          />
+      <AuthContext.Provider value={loggedIn}>
+        <div className="App">
+          <Header loggedIn={loggedIn} onSignOut={onSignOut} />
+          <Switch>
+            <ProtectedRoute
+              exact
+              path='/user/:id'
+              component={User}
+              loggedIn={loggedIn}
+            />
+            <ProtectedRoute
+              exact
+              path='/cart'
+              component={Cart}
+              loggedIn={loggedIn}
+            />
+            <ProtectedRoute
+              exact
+              path='/subscriptions'
+              component={Subscriptions}
+              loggedIn={loggedIn}
+            />
 
-          <ProtectedRoute
-            exact
-            path='/favorites'
-            favorites={recipes}
-            component={Favorites}
-            loggedIn={loggedIn}
-          />
+            <ProtectedRoute
+              exact
+              path='/favorites'
+              favorites={recipes}
+              component={Favorites}
+              loggedIn={loggedIn}
+            />
 
-          <ProtectedRoute
-            exact
-            path='/recipes/create'
-            favorites={recipes}
-            component={RecipeCreate}
-            loggedIn={loggedIn}
-          />
+            <ProtectedRoute
+              exact
+              path='/recipes/create'
+              favorites={recipes}
+              component={RecipeCreate}
+              loggedIn={loggedIn}
+            />
 
-          <ProtectedRoute
-            exact
-            path='/recipes/:id/edit'
-            component={RecipeEdit}
-            loggedIn={loggedIn}
-          />
-          <Route exact path='/recipes/:id'>
-            <SingleCard loggedIn={loggedIn} />
-          </Route>
-          <Route exact path='/recipes'>
-            <Main recipes={recipes} loggedIn={loggedIn} />
-          </Route>
-          <Route exact path='/signin'>
-            <SignIn onSignIn={_ => {
-              history.push('/recipes')
-            }}/>
-          </Route>
-          <Route exact path='/signup'>
-            <SignUp onSignUp={_ => {
-              history.push('/recipes')
-            }}/>
-          </Route>
-        </Switch>
-        <Footer />
-      </div>
+            <ProtectedRoute
+              exact
+              path='/recipes/:id/edit'
+              component={RecipeEdit}
+              loggedIn={loggedIn}
+            />
+            <Route exact path='/recipes/:id'>
+              <SingleCard loggedIn={loggedIn} />
+            </Route>
+
+            <Route exact path='/recipes'>
+              <Main recipes={recipes} loggedIn={loggedIn} />
+            </Route>
+
+
+            <Route exact path='/signin'>
+              <SignIn onSignIn={values => {
+                setLoggedIn(true)
+                history.push('/recipes')
+              }}/>
+            </Route>
+            <Route exact path='/signup'>
+              <SignUp onSignUp={values => {
+                history.push('/signin')
+              }}/>
+            </Route>
+            <Route path='/'>
+              {loggedIn ? <Redirect to='/recipes' /> : <Redirect to='/signin'/>}
+            </Route>
+          </Switch>
+          <Footer />
+        </div>
+      </AuthContext.Provider>
     </RecipesContext.Provider>
   );
 }
