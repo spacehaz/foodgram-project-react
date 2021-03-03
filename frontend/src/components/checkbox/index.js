@@ -7,27 +7,25 @@ const Checkbox = ({
   onChange,
   className,
   color,
-  defaultValue = false,
-  title
+  value = false,
+  title,
+  id
 }) => {
-  const [ active, setActive ] = useState(defaultValue)
   const clickHandler = () => {
-    const newState = !active
-    setActive(newState)
-    onChange && onChange(newState)
+    onChange && onChange(id)
   }
   const classNames = cn(styles.checkbox, className, {
-    [styles['checkbox_active']]: active
+    [styles['checkbox_active']]: value
   })
 
   return <div className={styles['checkbox-container']}>
     <button
       className={classNames}
       onClick={clickHandler}
-      style={{ backgroundColor: color }}
+      style={{ backgroundColor: value && color }}
       type='button'
     >
-      {active ? <Icons.CheckIcon /> : ''}
+      {value ? <Icons.CheckIcon /> : ''}
     </button>
     <span>{title}</span>
   </div>

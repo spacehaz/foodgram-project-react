@@ -2,6 +2,7 @@
   display: flex;
   justify-content: space-between;
   text-align: left;
+  padding: 60px 0px;
 }
 
 .single-card__buttons {
@@ -18,8 +19,20 @@
   margin-right: 0px;
 }
 
+.single-card__edit {
+  margin-left: 40px;
+  color: #000;
+  text-decoration: underline;
+}
 
+.single-card__text, .single-card__text_with_link {
+  display: flex;
+  align-items: center;
+}
 
+.single-card__text svg {
+  margin-right: 12px;
+}
 
 .single-card__image {
   object-fit: cover;
@@ -40,6 +53,7 @@
 .single-card__header-info {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   margin: 0 0 18px;
 }
 
@@ -48,6 +62,7 @@
   font-style: normal;
   font-weight: bold;
   font-size: 40px;
+
   line-height: 49px;
   color: #000000;
   margin: 0;

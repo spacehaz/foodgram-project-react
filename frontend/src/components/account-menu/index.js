@@ -18,7 +18,7 @@ const AccountMenu = ({ onSignOut }) => {
   return <div className={styles.menu}>
     <LinkComponent
       className={styles.menuLink}
-      href='/signup'
+      href='/change-password'
       title='Изменить пароль'
     />
     <button

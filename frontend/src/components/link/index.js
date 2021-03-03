@@ -1,12 +1,12 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import styles from './style.module.css'
 import cn from 'classnames'
 
-const LinkComponent = ({ href, title, className }) => {
-  return <Link className={cn(styles.link, className)} to={href}>
+const LinkComponent = ({ exact, href, title, className, activeClassName }) => {
+  return <NavLink exact={exact} activeClassName={activeClassName} className={cn(styles.link, className)} to={href}>
     {title}
-  </Link>
+  </NavLink>
 }
 
 export default LinkComponent

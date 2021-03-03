@@ -17,7 +17,7 @@ const Card = ({
 }) => {
   
   return <div className={styles.card}>
-      <div className={styles.card__image} style={{ backgroundImage: `url(${ img })`}} />
+      <div className={styles.card__image} style={{ backgroundImage: `url(${ img })` }} />
       <div className={styles.card__body}>
         <LinkComponent
           className={styles.card__title}
@@ -29,7 +29,11 @@ const Card = ({
           <Icons.ClockIcon /> {time} мин.
         </div>
         <div className={styles.card__author}>
-          <Icons.UserIcon /> {author}
+          <Icons.UserIcon /> <LinkComponent
+            href={`/user/${id}`}
+            title={author}
+            className={styles.card__link}
+          />
         </div>
       </div>
       
@@ -37,7 +41,7 @@ const Card = ({
           <Button modifier='style_light-blue' clickHandler={_ => {
             handleAddToCart({ id, toAdd: !is_in_shopping_cart })
           }}>
-            Добавить в покупки
+            {is_in_shopping_cart ? 'Удалить из покупок' : 'Добавить в покупки'}
           </Button>
           
           <Button

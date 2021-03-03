@@ -234,6 +234,48 @@ class Api {
       }
     ).then(checkResponse)
   }
+
+
+  // oreder
+  getOrders ({ token }) {
+    return fetch(
+      `/order`,
+      {
+        method: 'GET',
+        headers: {
+          ...this._headers,
+          'authorization': `Token ${token}`
+        }
+      }
+    ).then(checkResponse)
+  }
+
+  deleteOrders ({ token }) {
+    return fetch(
+      `/order`,
+      {
+        method: 'DELETE',
+        headers: {
+          ...this._headers,
+          'authorization': `Token ${token}`
+        }
+      }
+    ).then(checkResponse)
+  }
+
+
+  addToOrders ({ token, recipe_id }) {
+    return fetch(
+      '/order',
+      {
+        method: 'POST',
+        headers: {
+          ...this._headers,
+          'authorization': `Token ${token}`
+        }
+      }
+    ).then(checkResponse)
+  }
 }
 
 const api = new Api(process.env.API_URL, { 'content-type': 'application/json' })

@@ -14,7 +14,9 @@ const Nav = ({ loggedIn }) => {
           })} key={item.href}>
             <LinkComponent
               title={item.title}
+              activeClassName={styles.nav__link_active}
               href={item.href}
+              exact
               className={styles.nav__link}
             />
           </li>

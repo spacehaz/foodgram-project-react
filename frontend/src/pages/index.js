@@ -8,6 +8,7 @@ import Favorites from './favorites'
 import Subscriptions from './subscriptions'
 import RecipeCreate from './recipe-create'
 import User from './user'
+import ChangePassword from './change-password'
 
 export {
   Main,
@@ -19,5 +20,6 @@ export {
   Favorites,
   Subscriptions,
   RecipeCreate,
-  User
+  User,
+  ChangePassword
 }

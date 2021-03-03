@@ -1,11 +1,21 @@
-import { Card, Title, Pagination, CardList, Container, Main  } from '../../components'
+import { Card, Title, Pagination, CardList, Container, Main, CheckboxGroup  } from '../../components'
+import styles from './styles.module.css'
+import { useTags } from '../../utils'
 
 const HomePage = ({ recipes = [], handleLike, handleAddToCart }) => {
+  const { value, handleChange } = useTags()
+  const filters = value.filter(item => item.value).map(item => item.id)
+  const recipesToShow = recipes.filter(recipe => {
+    return recipe.tags.find(tag => filters.indexOf(tag.id) > -1)
+  })
   return <Main>
     <Container>
-      <Title title='Рецепты' />
+      <div className={styles.title}>
+        <Title title='Рецепты' />
+        <CheckboxGroup values={value} handleChange={handleChange} />
+      </div>
       <CardList>
-        {recipes.map(card => <Card
+        {recipesToShow.map(card => <Card
           {...card}
           key={card.id}
           handleLike={handleLike}

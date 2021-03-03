@@ -1,6 +1,7 @@
-import { PurchaseList, Title, Container, Main  } from '../../components'
+import { PurchaseList, Title, Container, Main, Button } from '../../components'
 import img1 from '../../images/1.jpg'
 import img2 from '../../images/2.jpg'
+import styles from './styles.module.css'
 
 const Cart = () => {
   const orders = [
@@ -22,9 +23,14 @@ const Cart = () => {
       }
   ]
   return <Main>
-    <Container>
-      <Title title='Список покупок' />
-      <PurchaseList orders={orders} />
+    <Container className={styles.container}>
+      <div className={styles.cart}>
+        <Title title='Список покупок' />
+        <PurchaseList orders={orders} />
+        <Button
+          modifier='style_dark-blue'
+        >Скачать список</Button>
+      </div>
     </Container>
   </Main>
 }

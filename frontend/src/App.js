@@ -14,7 +14,8 @@ import {
   SignUp,
   RecipeEdit,
   RecipeCreate,
-  User
+  User,
+  ChangePassword
 } from './pages'
 
 import { useState } from 'react'
@@ -161,6 +162,12 @@ function App() {
     setRecipes(recipesUpdated)
   }
 
+  const loadSingleItem = ({ id, callback }) => {
+    setTimeout(_ => {
+      callback()
+    }, 3000)
+  }
+
   const history = useHistory()
   const onSignOut = () => {
     setLoggedIn(false)
@@ -176,6 +183,7 @@ function App() {
               exact
               path='/user/:id'
               component={User}
+              recipes={recipes}
               loggedIn={loggedIn}
             />
             <ProtectedRoute
@@ -212,9 +220,24 @@ function App() {
               path='/recipes/:id/edit'
               component={RecipeEdit}
               loggedIn={loggedIn}
+              loadItem={loadSingleItem}
             />
-            <Route exact path='/recipes/:id'>
-              <SingleCard loggedIn={loggedIn} />
+            <ProtectedRoute
+              exact
+              path='/change-password'
+              component={ChangePassword}
+              loggedIn={loggedIn}
+            />
+
+            <Route
+              exact
+              path='/recipes/:id'
+            >
+              <SingleCard
+                loggedIn={loggedIn}
+                handleLike={handleLike}
+                loadItem={loadSingleItem}
+              />
             </Route>
 
             <Route exact path='/recipes'>

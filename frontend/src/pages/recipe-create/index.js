@@ -8,7 +8,7 @@ const RecipeCreate = ({ onEdit }) => {
       <Form className={styles.form}>
         <Input label='Название рецепта' />
         <Textarea label='Описание рецепта' />
-        <CheckboxGroup />
+        <CheckboxGroup title='Теги' />
         <Button
           modifier='style_dark-blue'
         >
