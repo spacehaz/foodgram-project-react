@@ -1,4 +1,3 @@
 import React from 'react'
 
-const RecipesContext = React.createContext()
-export default RecipesContext
+export default React.createContext()

@@ -1,7 +1,7 @@
 import styles from './style.module.css'
 import { LinkComponent, Icons, Button, TagsContainer } from '../index'
-import { useState } from 'react'
-// import api from 'api'
+import { useState, useContext } from 'react'
+import { AuthContext } from '../../contexts'
 
 const Card = ({
   title = 'Без названия',
@@ -15,7 +15,8 @@ const Card = ({
   handleLike,
   handleAddToCart
 }) => {
-  
+  const authContext = useContext(AuthContext)
+
   return <div className={styles.card}>
       <div className={styles.card__image} style={{ backgroundImage: `url(${ img })` }} />
       <div className={styles.card__body}>
@@ -44,14 +45,14 @@ const Card = ({
             {is_in_shopping_cart ? 'Удалить из покупок' : 'Добавить в покупки'}
           </Button>
           
-          <Button
+          {authContext && <Button
             modifier='style_none'
             clickHandler={_ => {
               handleLike({ id, toLike: !is_favorited })
             }}
           >
             {is_favorited ? <Icons.StarActiveIcon /> : <Icons.StarIcon />}
-          </Button>
+          </Button>}
       </div>
   </div>
 }

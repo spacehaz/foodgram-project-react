@@ -4,3 +4,15 @@
   justify-content: space-between;
   width: 100%;
 }
+
+.container {
+  text-align: left;
+}
+
+.titleText {
+  margin-bottom: 23px;
+}
+
+.buttonSubscribe {
+  margin-bottom: 46px;
+}
