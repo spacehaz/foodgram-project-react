@@ -54,7 +54,7 @@ const SingleCard = ({ loadItem, handleLike }) => {
           </div>
           <div className={styles['single-card__buttons']}>
             <Button className={styles['single-card__button']} modifier='style_dark-blue'>
-              Добавить в покупки
+              <Icons.PlusIcon />Добавить в покупки
             </Button>
             {authContext && <Button className={styles['single-card__button']}>
               Подписаться на автора

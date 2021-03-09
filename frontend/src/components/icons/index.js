@@ -5,6 +5,7 @@ import UserIcon from './user'
 import CheckIcon from './check'
 import ArrowLeftIcon from './arrow-left'
 import ArrowRightIcon from './arrow-right'
+import PlusIcon from './plus'
 
 export default {
   StarIcon,
@@ -13,5 +14,6 @@ export default {
   UserIcon,
   CheckIcon,
   ArrowLeftIcon,
-  ArrowRightIcon
+  ArrowRightIcon,
+  PlusIcon
 }

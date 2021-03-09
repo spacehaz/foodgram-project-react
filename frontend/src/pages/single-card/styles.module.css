@@ -11,7 +11,13 @@
 
 
 .single-card__button {
+  display: flex;
+  align-items: center;
   margin-right: 16px;
+}
+
+.single-card__button svg {
+  margin-right: 5px;
 }
 
 .single-card__button:last-child {

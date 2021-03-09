@@ -1,8 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 import { Switch, Route, useHistory, Redirect } from 'react-router-dom'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Header, Footer, ProtectedRoute } from './components'
+import api from './api'
 
 import {
   Main,
@@ -18,7 +19,6 @@ import {
   ChangePassword
 } from './pages'
 
-import { useState } from 'react'
 import img1 from './images/1.jpg'
 import img2 from './images/2.jpg'
 import { RecipesContext, AuthContext } from './contexts'
@@ -139,6 +139,7 @@ function App() {
     }
   ]
   const [ loggedIn, setLoggedIn ] = useState(true)
+  const [ user, setUser ] = useState({})
   const [ loading, setLoading ] = useState(false)
   const [ recipes, setRecipes ] = useState(initialRecipes)
 
@@ -162,6 +163,32 @@ function App() {
     setRecipes(recipesUpdated)
   }
 
+  const registration = ({
+    email,
+    password,
+    username,
+    first_name,
+    last_name
+  }) => {
+    api.signup({ email, password, username, first_name, last_name })
+    .then(res => {
+      history.push('/signin')
+    })
+  }
+
+  const authorization = ({
+    email, password
+  }) => {
+    api.signin({
+      email, password
+    }).then(res => {
+      if (res.auth_token) {
+        localStorage.setItem('token', res.auth_token)
+        setLoggedIn(true)
+      }
+    })
+  }
+
   const loadSingleItem = ({ id, callback }) => {
     setTimeout(_ => {
       callback()
@@ -172,6 +199,36 @@ function App() {
   const onSignOut = () => {
     setLoggedIn(false)
   }
+
+  const getInitialData = () => {
+    Promise.all([
+      api.getUser(),
+      api.getRecipes()
+    ]).then(([ user, recipes ]) => {
+      setUser(user)
+      setRecipes(recipes)
+      history.push('/recipes')
+    })
+  }
+
+  // useEffect(_ => {
+  //   if (loggedIn) {
+  //     getInitialData()
+  //   }
+  // }, [loggedIn])
+
+  // useEffect(_ => {
+  //   const token = localStorage.getItem('token')
+  //   if (token) {
+  //     api.getUser()
+  //       .then(res => {
+  //         getInitialData()
+  //       })
+  //       .catch(err => {
+  //         history.push('/signin')
+  //       })
+  //   }
+  // }, [])
   
   return (
     <RecipesContext.Provider value={recipes}>
@@ -251,15 +308,19 @@ function App() {
 
 
             <Route exact path='/signin'>
-              <SignIn onSignIn={values => {
-                setLoggedIn(true)
-                history.push('/recipes')
-              }}/>
+              <SignIn
+                onSignIn={values => {
+                  setLoggedIn(true)
+                  history.push('/recipes')
+                }}
+              />
             </Route>
             <Route exact path='/signup'>
-              <SignUp onSignUp={values => {
-                history.push('/signin')
-              }}/>
+              <SignUp
+                onSignUp={values => {
+                  history.push('/signin')
+                }}
+              />
             </Route>
             <Route path='/'>
               {loggedIn ? <Redirect to='/recipes' /> : <Redirect to='/signin'/>}
