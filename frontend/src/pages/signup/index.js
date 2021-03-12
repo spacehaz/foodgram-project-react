@@ -13,7 +13,10 @@ const SignUp = ({ onSignUp }) => {
     {authContext && <Redirect to='/recipes' />}
     <Container>
       <Title title='Регистрация' />
-      <Form className={styles.form}>
+      <Form className={styles.form} onSubmit={e => {
+        e.preventDefault()
+        onSignUp(values)
+      }}>
         <Input
           label='Имя'
           name='first_name'
@@ -48,7 +51,7 @@ const SignUp = ({ onSignUp }) => {
         />
         <Button
           modifier='style_dark-blue'
-          clickHandler={_ => onSignUp(values)}
+          type='submit'
           disabled={!isValid}
         >
           Создать аккаунт

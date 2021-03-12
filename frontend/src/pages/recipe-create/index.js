@@ -2,8 +2,10 @@ import { Container, Input, Title, CheckboxGroup, Main, Form, Button, Checkbox, T
 import styles from './styles.module.css'
 import api from '../../api'
 import { useEffect, useState } from 'react'
+import { useTags } from '../../utils'
 
 const RecipeCreate = ({ onEdit }) => {
+  const { value, handleChange } = useTags()
   const [ ingredients, setIngredients ] = useState([
     {
       id: 1,
@@ -43,8 +45,8 @@ const RecipeCreate = ({ onEdit }) => {
       <Title title='Создание рецепта' />
       <Form className={styles.form}>
         <Input label='Название рецепта' />
+        <CheckboxGroup label='Теги' values={value} handleChange={handleChange} />
         <Textarea label='Описание рецепта' />
-        <CheckboxGroup title='Теги' />
         <Button
           modifier='style_dark-blue'
         >

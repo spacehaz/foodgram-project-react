@@ -3,10 +3,12 @@ import styles from './styles.module.css'
 import { useState, useContext, useEffect } from 'react'
 import { useRouteMatch, useParams, useLocation } from 'react-router-dom'
 import { RecipesContext } from '../../contexts'
+import { useTags } from '../../utils'
 
 const RecipeEdit = ({ onEdit, loadItem }) => {
   const [ loading, setLoading ] = useState(true)
-  const value = useContext(RecipesContext)
+  const { value, handleChange } = useTags()
+  // const value = useContext(RecipesContext)
   // const { id } = useParams()
   // const params = useLocation()
   // console.log({ params })
@@ -26,7 +28,7 @@ const RecipeEdit = ({ onEdit, loadItem }) => {
       <Title title='Редактирование рецепта' />
       <Form className={styles.form}>
         <Input label='Название рецепта' />
-        <CheckboxGroup title='Теги' />
+        <CheckboxGroup label='Теги' values={value} handleChange={handleChange} />
         <Textarea label='Описание рецепта' onUpdated/>
         <Button
           modifier='style_dark-blue'

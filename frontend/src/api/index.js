@@ -17,7 +17,7 @@ class Api {
       {
         method: 'POST',
         headers: this._headers,
-        body: JSON.strigify({
+        body: JSON.stringify({
           email, password
         })
       }
@@ -26,11 +26,11 @@ class Api {
 
   signup ({ email, password, username, first_name, last_name }) {
     return fetch(
-      '/api/auth/users',
+      `${this._url}/api/auth/users`,
       {
         method: 'POST',
         headers: this._headers,
-        body: JSON.strigify({
+        body: JSON.stringify({
           email, password, username, first_name, last_name
         })
       }
@@ -46,7 +46,7 @@ class Api {
     is_favorited = false,
     is_in_shopping_cart = false,
     author
-  }) {
+  } = {}) {
       const token = localStorage.getItem('token')
       return fetch(
         `/recipes?page=${page}&limit=${limit}&is_favorited=${is_favorited}&is_in_shopping_cart=${is_in_shopping_cart}${author ? `&author=${author}` : ''}`,
@@ -93,7 +93,7 @@ class Api {
           ...this._headers,
           'authorization': `Token ${token}`
         },
-        body: JSON.strigify({
+        body: JSON.stringify({
           token,
           title,
           img,
@@ -124,7 +124,7 @@ class Api {
           ...this._headers,
           'authorization': `Token ${token}`
         },
-        body: JSON.strigify({
+        body: JSON.stringify({
           token,
           title,
           img,
@@ -141,6 +141,20 @@ class Api {
     const token = localStorage.getItem('token')
     return fetch(
       `/users/${id}`,
+      {
+        method: 'GET',
+        headers: {
+          ...this._headers,
+          'authorization': `Token ${token}`
+        }
+      }
+    ).then(this.checkResponse)
+  }
+
+  getUsers () {
+    const token = localStorage.getItem('token')
+    return fetch(
+      `/api/users/`,
       {
         method: 'GET',
         headers: {
@@ -183,7 +197,7 @@ class Api {
           ...this._headers,
           'authorization': `Token ${token}`
         },
-        body: JSON.strigify({
+        body: JSON.stringify({
           author_id
         })
       }
@@ -200,7 +214,7 @@ class Api {
           ...this._headers,
           'authorization': `Token ${token}`
         },
-        body: JSON.strigify({
+        body: JSON.stringify({
           author_id
         })
       }
@@ -281,4 +295,4 @@ class Api {
   }
 }
 
-export default new Api(process.env.API_URL, { 'content-type': 'application/json' })
+export default new Api(process.env.API_URL || 'http://localhost', { 'content-type': 'application/json' })

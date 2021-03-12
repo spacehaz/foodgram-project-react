@@ -24,7 +24,7 @@ const Button = ({
   return <button
     className={classNames}
     disabled={disabled}
-    onClick={_ => clickHandler()}
+    onClick={_ => clickHandler && clickHandler()}
   >
     {children}
   </button>

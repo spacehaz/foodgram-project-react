@@ -138,7 +138,7 @@ function App() {
       author: 'Александр Бородин'
     }
   ]
-  const [ loggedIn, setLoggedIn ] = useState(true)
+  const [ loggedIn, setLoggedIn ] = useState(false)
   const [ user, setUser ] = useState({})
   const [ loading, setLoading ] = useState(false)
   const [ recipes, setRecipes ] = useState(initialRecipes)
@@ -171,9 +171,9 @@ function App() {
     last_name
   }) => {
     api.signup({ email, password, username, first_name, last_name })
-    .then(res => {
-      history.push('/signin')
-    })
+      .then(res => {
+        history.push('/signin')
+      })
   }
 
   const authorization = ({
@@ -211,24 +211,24 @@ function App() {
     })
   }
 
-  // useEffect(_ => {
-  //   if (loggedIn) {
-  //     getInitialData()
-  //   }
-  // }, [loggedIn])
+  useEffect(_ => {
+    if (loggedIn) {
+      getInitialData()
+    }
+  }, [loggedIn])
 
-  // useEffect(_ => {
-  //   const token = localStorage.getItem('token')
-  //   if (token) {
-  //     api.getUser()
-  //       .then(res => {
-  //         getInitialData()
-  //       })
-  //       .catch(err => {
-  //         history.push('/signin')
-  //       })
-  //   }
-  // }, [])
+  useEffect(_ => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      api.getUsers()
+        .then(res => {
+          getInitialData()
+        })
+        .catch(err => {
+          history.push('/signin')
+        })
+    }
+  }, [])
   
   return (
     <RecipesContext.Provider value={recipes}>
@@ -317,9 +317,7 @@ function App() {
             </Route>
             <Route exact path='/signup'>
               <SignUp
-                onSignUp={values => {
-                  history.push('/signin')
-                }}
+                onSignUp={registration}
               />
             </Route>
             <Route path='/'>
